@@ -32,7 +32,7 @@ class TopBar extends React.Component {
     }
 
     getHealth() {
-        fetch('http://localhost:9200/_cat/health?format=json')
+        fetch('/api/_cat/health?format=json')
             .then(res => res.json())
             .then((data) => {
                 this.setState({health: data[0].status})

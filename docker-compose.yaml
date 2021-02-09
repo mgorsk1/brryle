@@ -5,8 +5,11 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+    container_name: brryle
     ports:
-      - 80:80
+      - 80:3000
+    environment:
+      BACKEND_URL: http://elastic:9200
     networks:
       - brryle
   elastic:

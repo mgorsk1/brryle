@@ -1,5 +1,6 @@
 import React from 'react';
 import './Search.css';
+
 import ResultCard from '../ResultCard/ResultCard'
 import SearchSummary from "../SearchSummary/SearchSummary";
 import GoogleColors from "../../utils/const";
@@ -74,7 +75,7 @@ class Search extends React.Component {
             })
         };
 
-        fetch('http://localhost:9200/_search', requestOptions)
+        fetch('/api/_search', requestOptions)
             .then(res => res.json())
             .then((data) => {
                 this.setState({

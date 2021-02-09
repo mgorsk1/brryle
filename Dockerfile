@@ -10,6 +10,16 @@ COPY . /app
 
 RUN npm run build
 
-FROM nginx:alpine
+FROM node:latest
 
-COPY --from=builder /app/build /usr/share/nginx/html
+WORKDIR /app
+
+COPY package.json .
+COPY server.js .
+COPY --from=builder /app/build /app/build
+
+RUN npm instal
+
+EXPOSE 3000
+
+ENTRYPOINT ["node", "server.js"]
