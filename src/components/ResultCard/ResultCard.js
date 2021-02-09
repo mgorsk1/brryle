@@ -26,7 +26,6 @@ class ResultCard extends React.Component {
                                             size="small"
                                             label="Clickable"
                                             variant="outlined"
-                                            onClick={this.handleClick}
                                         />
                                     </Grid>
                                 </Grid>

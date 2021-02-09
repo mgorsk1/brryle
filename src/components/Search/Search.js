@@ -1,5 +1,5 @@
 import React from 'react';
-import './Search.scss';
+import './Search.css';
 import ResultCard from '../ResultCard/ResultCard'
 import SearchSummary from "../SearchSummary/SearchSummary";
 import GoogleColors from "../../utils/const";
@@ -41,24 +41,26 @@ class Search extends React.Component {
         this.conductSearch()
     }
 
+    handleQueryChange(event) {
+        this.setState({query: event.target.value});
+    }
+
     handlePageChange(event, value) {
         event.preventDefault()
 
         this.setState({from: (parseInt(value) - 1) * this.state.size}, function () {
             this.conductSearch();
 
-            var elementToHighlight = document.getElementById('search-pagination').getElementsByClassName('Mui-selected')[0]
-            var elementsToDim = document.getElementById('search-pagination').getElementsByClassName('MuiButtonBase-root MuiPaginationItem-root MuiPaginationItem-page MuiPaginationItem-textPrimary')
+            let elementToHighlight = document.getElementById('search-pagination').getElementsByClassName('Mui-selected')[0]
+            let elementsToDim = document.getElementById('search-pagination').getElementsByClassName('MuiButtonBase-root MuiPaginationItem-root MuiPaginationItem-page MuiPaginationItem-textPrimary')
 
-            for (var i = 0; i < elementsToDim.length; i++) {
-                var element = elementsToDim[i]
+            for (let i = 0; i < elementsToDim.length; i++) {
+                let element = elementsToDim[i]
                 element.style.backgroundColor = null
             }
 
             elementToHighlight.style.backgroundColor = GoogleColors[(parseInt(value) - 1) % GoogleColors.length]
         });
-
-
     }
 
     conductSearch() {
@@ -83,10 +85,6 @@ class Search extends React.Component {
                 })
             })
             .catch(console.log)
-    }
-
-    handleQueryChange(event) {
-        this.setState({query: event.target.value});
     }
 
     resetState(e) {

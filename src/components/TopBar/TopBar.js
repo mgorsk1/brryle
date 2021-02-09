@@ -3,7 +3,6 @@ import './TopBar.css';
 import PersonRounded from '@material-ui/icons/PersonRounded';
 
 class TopBar extends React.Component {
-
     constructor(props) {
         super(props);
 
@@ -19,17 +18,16 @@ class TopBar extends React.Component {
     }
 
     getColor(health) {
-        var base = 'gray';
-
-        var colors = new Map()
+        let colors = new Map()
         colors.set('red', '#ea4335')
         colors.set('yellow', '#fbbc05')
         colors.set('green', '#34a853')
+        colors.set('default', 'gray')
 
         if (health) {
             return colors.get(health)
         } else {
-            return base
+            return colors.get('default')
         }
     }
 
@@ -43,7 +41,7 @@ class TopBar extends React.Component {
     }
 
     render() {
-        var color = this.getColor(this.state.health)
+        let color = this.getColor(this.state.health)
 
         return (
             <div className="topBar">
