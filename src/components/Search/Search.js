@@ -30,7 +30,7 @@ class Search extends React.Component {
         this.handleFormSubmit = this.handleFormSubmit.bind(this);
         this.handlePageChange = this.handlePageChange.bind(this);
         this.handleQueryChange = this.handleQueryChange.bind(this);
-        this.clearSearchQuery = this.clearSearchQuery.bind(this);
+        this.resetState = this.resetState.bind(this);
 
         this.conductSearch = this.conductSearch.bind(this);
     }
@@ -89,7 +89,7 @@ class Search extends React.Component {
         this.setState({query: event.target.value});
     }
 
-    clearSearchQuery(e) {
+    resetState(e) {
         this.setState(initialState)
     }
 
@@ -117,7 +117,7 @@ class Search extends React.Component {
                                                        <ClearIcon color="disabled"
                                                                   fontSize="small"
                                                                   style={{cursor: "pointer"}}
-                                                                  onClick={this.clearSearchQuery}/>
+                                                                  onClick={this.resetState}/>
                                                    </InputAdornment>
                                                )
                                            }}
