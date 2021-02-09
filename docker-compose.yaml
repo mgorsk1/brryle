@@ -1,0 +1,46 @@
+version: '3'
+
+services:
+  brryle:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 80:80
+    networks:
+      - brryle
+  elastic:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.10.1
+    container_name: elastic
+    environment:
+      - cluster.name=elasticsearch-sages-single
+      - discovery.seed_hosts=elastic
+      - cluster.initial_master_nodes=elastic
+      - node.name=elastic
+      - node.ingest=true
+      - xpack.ml.enabled=false
+      - bootstrap.memory_lock=true
+      - http.cors.allow-origin=*
+      - http.cors.enabled=true
+      - "ES_JAVA_OPTS=-Xms1024m -Xmx1024m"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+      nofile:
+        soft: 65536
+        hard: 65536
+    volumes:
+      - elastic_brylle:/usr/share/elasticsearch/data
+    ports:
+      - 9200:9200
+    networks:
+      - brryle
+
+volumes:
+  elastic_brylle:
+    driver: local
+
+networks:
+  brryle:
+    driver: bridge
