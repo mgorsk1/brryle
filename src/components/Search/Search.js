@@ -3,7 +3,7 @@ import './Search.css';
 
 import ResultCard from '../ResultCard/ResultCard'
 import SearchSummary from "../SearchSummary/SearchSummary";
-import GoogleColors from "../../utils/const";
+import * as C from "../../utils/const";
 
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
@@ -18,7 +18,7 @@ const initialState = {
     hits: [],
     query: '',
     from: 0,
-    size: 5,
+    size: C.PageSize,
     activeQuery: false
 }
 
@@ -60,7 +60,7 @@ class Search extends React.Component {
                 element.style.backgroundColor = null
             }
 
-            elementToHighlight.style.backgroundColor = GoogleColors[(parseInt(value) - 1) % GoogleColors.length]
+            elementToHighlight.style.backgroundColor = C.GoogleColors[(parseInt(value) - 1) % C.GoogleColors.length]
         });
     }
 
