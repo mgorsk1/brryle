@@ -69,13 +69,32 @@ class Search extends React.Component {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({
-                query: {match: {Interests: this.state.query}},
+                query: {
+                    function_score: {
+                        query: {
+                            multi_match: {
+                                query: this.state.query,
+                                fields: ["title^1000", "description^100", "category^50", "subcategory^10", "labels^5"]
+                            }
+                        },
+                        field_value_factor: {
+                            field: "views",
+                            modifier: "log2p"
+                        }
+                    }
+                },
                 from: this.state.from,
-                size: this.state.size
+                size: this.state.size,
+                highlight: {
+                    fields: {
+                        title: {},
+                        description: {}
+                    }
+                }
             })
         };
 
-        fetch('/api/_search', requestOptions)
+        fetch('/api/'.concat(C.ElasticsearchIndex, '/_search'), requestOptions)
             .then(res => res.json())
             .then((data) => {
                 this.setState({
@@ -148,7 +167,7 @@ class Search extends React.Component {
                             color="primary"
                             onChange={this.handlePageChange}
                             count={Math.ceil(this.state.count / this.state.size)}
-
+                            style={{paddingBottom: "15px"}}
                         /> : null}
                 </div>
             </div>
