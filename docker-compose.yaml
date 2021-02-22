@@ -15,7 +15,7 @@ services:
     container_name: elastic
     network_mode: host
     environment:
-      - cluster.name=elasticsearch-sages-single
+      - cluster.name=brryle
       - discovery.seed_hosts=elastic
       - cluster.initial_master_nodes=elastic
       - node.name=elastic
