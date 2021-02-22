@@ -2,6 +2,7 @@
   "script": {
     "lang": "mustache",
     "source": {
+      "track_total_hits": true,
       "query": {
         "function_score": {
           "query": {

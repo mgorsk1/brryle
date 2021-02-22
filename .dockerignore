@@ -1,2 +1,6 @@
 /node_modules
 /build
+Makefile
+resources
+docker-compose.yaml
+README.md

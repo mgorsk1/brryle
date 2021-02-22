@@ -1,0 +1,16 @@
+{
+  "actions": [
+    {
+      "remove": {
+        "index": "*",
+        "alias": "news"
+      }
+    },
+    {
+      "add": {
+        "index": "news-dummy",
+        "alias": "news"
+      }
+    }
+  ]
+}
