@@ -1,0 +1,31 @@
+{
+  "script": {
+    "lang": "mustache",
+    "source": {
+      "track_total_hits": true,
+      "query": {
+        "function_score": {
+          "query": {
+            "multi_match": {
+              "query": "{{pQuery}}",
+              "fields": [
+                "title^1000",
+                "description^100",
+                "category^50",
+                "subcategory^10",
+                "labels^5"
+              ]
+            }
+          },
+          "field_value_factor": {
+            "field": "views",
+            "modifier": "log2p",
+            "missing": 0
+          }
+        }
+      },
+      "from": "{{pFrom}}",
+      "size": "{{pSize}}"
+    }
+  }
+}
