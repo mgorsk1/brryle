@@ -69,32 +69,16 @@ class Search extends React.Component {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({
-                query: {
-                    function_score: {
-                        query: {
-                            multi_match: {
-                                query: this.state.query,
-                                fields: ["title^1000", "description^100", "category^50", "subcategory^10", "labels^5"]
-                            }
-                        },
-                        field_value_factor: {
-                            field: "views",
-                            modifier: "log2p"
-                        }
-                    }
-                },
-                from: this.state.from,
-                size: this.state.size,
-                highlight: {
-                    fields: {
-                        title: {},
-                        description: {}
-                    }
+                id: C.ESQueryTemplate,
+                params: {
+                    pQuery: this.state.query,
+                    pFrom: this.state.from,
+                    pSize: this.state.size
                 }
             })
         };
 
-        fetch('/api/'.concat(C.ElasticsearchIndex, '/_search'), requestOptions)
+        fetch('/api/'.concat(C.ESIndex, '/_search', '/template'), requestOptions)
             .then(res => res.json())
             .then((data) => {
                 this.setState({
