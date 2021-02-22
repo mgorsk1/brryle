@@ -7,7 +7,7 @@ class SearchSummary extends React.Component {
         return (
             <Typography variant="body2" color="textSecondary"
                         className="searchSummary" style={{textAlign: "left", marginLeft: "22px", height: "10px"}}>
-                {(this.props.count > 0) ? 'Około' : ''} {this.props.count.toLocaleString()} wyników ({this.props.time / 1000} s)
+                {(this.props.count > 0) ? 'Około' : ''} {this.props.count.toLocaleString()} wyników ({Math.max(this.props.time, 1) / 1000} s)
             </Typography>
         );
     }
