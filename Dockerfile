@@ -5,7 +5,7 @@ WORKDIR /app
 
 COPY package.json /app
 
-RUN npm install
+RUN yarn install --production=true
 COPY . /app
 
 RUN npm run build
@@ -18,7 +18,7 @@ COPY package.json .
 COPY server.js .
 COPY --from=builder /app/build /app/build
 
-RUN npm instal
+RUN yarn install --production=true
 
 EXPOSE 3000
 
