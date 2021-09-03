@@ -5,7 +5,7 @@ WORKDIR /app
 
 COPY package.json /app
 
-RUN yarn install --production=true
+RUN yarn install --network-timeout 1000000 --production=true
 COPY . /app
 
 RUN npm run build
@@ -18,7 +18,7 @@ COPY package.json .
 COPY server.js .
 COPY --from=builder /app/build /app/build
 
-RUN yarn install --production=true
+RUN yarn install --network-timeout 1000000 --production=true
 
 EXPOSE 3000
 
