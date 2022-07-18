@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: elastic
+  labels:
+    app: elastic
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: elastic
+  template:
+    metadata:
+      labels:
+        app: elastic
+    spec:
+      initContainers:
+      - name: vm-max-map
+        image: alpine:3.6
+        command: [ "/sbin/sysctl", "-w", "vm.max_map_count=262144" ]
+        securityContext:
+          privileged: true
+      - name: ulimit
+        image: alpine:3.6
+        command: [ "sh", "-c", "ulimit -n 65536" ]
+        securityContext:
+          privileged: true
+      containers:
+      - name: base
+        image: "docker.elastic.co/elasticsearch/elasticsearch:{{ .Values.elastic.version }}"
+        envFrom:
+          - configMapRef:
+              name: {{ .Values.elastic.configMap.name }}
+        ports:
+          - containerPort: {{ .Values.elastic.service.port }}
+        securityContext:
+          privileged: true
+          capabilities:
+            add:
+            - IPC_LOCK
