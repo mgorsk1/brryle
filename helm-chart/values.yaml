@@ -15,7 +15,7 @@ app:
     port: "80"
 
 elastic:
-  version: 7.10.1
+  version: 8.3.2
   configMap:
     name: elastic-cm
     data:
@@ -23,11 +23,9 @@ elastic:
       discovery.seed_hosts: "elastic"
       cluster.initial_master_nodes: "elastic"
       node.name: "elastic"
-      node.ingest: "true"
+      node.roles: "master,data,ingest"
       xpack.ml.enabled: "false"
       bootstrap.memory_lock: "false"
-      http.cors.allow-origin: "*"
-      http.cors.enabled: "true"
       ES_JAVA_OPTS: "-Xms1024m -Xmx1024m"
   service:
     name: elastic-svc

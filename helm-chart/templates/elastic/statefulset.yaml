@@ -27,7 +27,7 @@ spec:
           privileged: true
       containers:
       - name: base
-        image: "docker.elastic.co/elasticsearch/elasticsearch:{{ .Values.elastic.version }}"
+        image: "elasticsearch:{{ .Values.elastic.version }}"
         envFrom:
           - configMapRef:
               name: {{ .Values.elastic.configMap.name }}
@@ -38,3 +38,17 @@ spec:
           capabilities:
             add:
             - IPC_LOCK
+        readinessProbe:
+          httpGet:
+            scheme: HTTP
+            path: /
+            port: 9200
+          initialDelaySeconds: 180
+          periodSeconds: 10
+        livenessProbe:
+          httpGet:
+            scheme: HTTP
+            path: /_cat/health
+            port: 9200
+          initialDelaySeconds: 180
+          periodSeconds: 30
