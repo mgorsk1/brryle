@@ -13,17 +13,18 @@ services:
     ports:
       - 80:80
   elastic:
-    image: docker.elastic.co/elasticsearch/elasticsearch:7.10.2
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.9.2
     container_name: elastic
     environment:
+      - xpack.security.enabled=false
       - cluster.name=brryle
       - discovery.seed_hosts=elastic
       - cluster.initial_master_nodes=elastic
       - node.name=elastic
-      - node.ingest=true
+      - node.roles=data,ingest,master
       - xpack.ml.enabled=false
       - bootstrap.memory_lock=true
-      - http.cors.allow-origin=*
+      - http.cors.allow-origin="*"
       - http.cors.enabled=true
       - "ES_JAVA_OPTS=-Xms1024m -Xmx1024m"
     ulimits:
@@ -36,9 +37,9 @@ services:
     ports:
       - 9200:9200
     volumes:
-      - elastic_brylle:/usr/share/elasticsearch/data
+      - elastic_brryle:/usr/share/elasticsearch/data
   kibana:
-    image: docker.elastic.co/kibana/kibana:7.10.2
+    image: docker.elastic.co/kibana/kibana:8.9.2
     container_name: kibana
     environment:
       - SERVER_NAME=kibana.brryle
@@ -46,5 +47,5 @@ services:
     ports:
       - 5601:5601
 volumes:
-  elastic_brylle:
+  elastic_brryle:
     driver: local
