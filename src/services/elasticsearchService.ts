@@ -46,10 +46,6 @@ export const getElasticsearchClusterHealth = async (): Promise<HealthStatus> => 
       console.error('[Brryle Search] Elasticsearch health check timed out.');
     } else {
       console.error('[Brryle Search] Error fetching Elasticsearch health:', error);
-      console.warn(
-        `[Brryle Search] This might be due to Elasticsearch not running at /api, network issues, or CORS policy. 
-        For CORS, ensure Elasticsearch is configured with 'http.cors.enabled: true' and 'http.cors.allow-origin' set appropriately in elasticsearch.yml.`
-      );
     }
     return HealthStatus.UNKNOWN; // Default to UNKNOWN or RED on fetch errors
   }
@@ -60,13 +56,6 @@ export const performSearch = async (
   query: string,
   currentPage: number = 1
 ): Promise<SearchResponse> => {
-  console.warn(
-    `[Brryle Search] Elasticsearch client integration is simplified for this environment. 
-    Using mock data if actual ES call fails or is not implemented. 
-    For a production setup, a backend proxy to Elasticsearch is recommended.
-    ELASTICSEARCH_URL (placeholder for direct calls): /api, Index: ${ESIndex}, Template: ${ESQueryTemplate}, PageSize: ${PageSize}`
-  );
-
   // Simulating Elasticsearch pFrom and pSize
   const pFrom = (currentPage - 1) * PageSize; // Updated usage
   const pSize = PageSize; // Updated usage
