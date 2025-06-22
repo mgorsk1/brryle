@@ -1,0 +1,6 @@
+
+{
+  "name": "Brryle Search",
+  "description": "A Google-like search application. Search functionality is currently using mocked Elasticsearch data, demonstrating pagination and result display.",
+  "requestFramePermissions": []
+}
