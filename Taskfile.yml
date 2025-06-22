@@ -1,0 +1,59 @@
+version: '3.2.1'
+
+tasks:
+
+  clean:
+    cmds:
+      - rm -rf ./build  # Command to remove the build directory
+    silent: true
+
+  build:
+    desc: "Builds the frontend application (compiles TS, copies HTML)"
+    deps: [clean]      # 'clean' task runs before 'build'
+    cmds:
+      - echo "Building application..."
+      # This uses 'npx tsc' to ensure it uses the local or a globally available tsc
+      # If 'tsc' is directly in your PATH, 'tsc' alone would also work.
+      - npx tsc         # Command to compile TypeScript using tsconfig.json
+      - mkdir build
+      - cp ./index.html ./build/index.html # Command to copy index.html to build directory
+      - echo "Build complete. Output in ./build directory."
+    silent: true
+
+  start:
+    desc: "Starts the production server (Node.js with proxy)"
+    cmds:
+      - echo "Starting production server..."
+      - node run start
+
+  remove-index:
+    desc: Remove the Elasticsearch index
+    cmds:
+      - curl -XDELETE http://localhost:9200/news-dummy
+
+  load-data:
+    desc: "Load dummy data into Elasticsearch"
+    cmds:
+      - |
+        curl -XPUT http://localhost:9200/news-dummy/_bulk -H 'Content-Type: application/json' --data-binary @./resources/elasticsearch/dummy-data.json
+
+  register-alias:
+    desc: "Register index alias in Elasticsearch"
+    cmds:
+      - |
+        curl -XPOST http://localhost:9200/_aliases -H 'Content-Type: application/json' --data '@./resources/elasticsearch/index-alias.json'
+
+  register-query-template:
+    desc: "Register query template in Elasticsearch"
+    cmds:
+      - |
+        curl -XPOST http://localhost:9200/_scripts/brryle -H 'Content-Type: application/json' --data '@./resources/elasticsearch/query-template.json'
+
+  dummy-setup:
+    desc: Full setup of dummy Elasticsearch index
+    deps:
+      - remove-index
+      - load-data
+      - register-alias
+      - register-query-template
+
