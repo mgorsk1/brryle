@@ -51,9 +51,9 @@ tasks:
 
   dummy-setup:
     desc: Full setup of dummy Elasticsearch index
-    deps:
-      - remove-index
-      - load-data
-      - register-alias
-      - register-query-template
+    cmds:
+      - task: remove-index
+      - task: load-data
+      - task: register-alias
+      - task: register-query-template
 
