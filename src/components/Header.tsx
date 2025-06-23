@@ -6,6 +6,7 @@ const tailwindGoogleColors: string[] = [
   'text-blue-600',    // Google Blue
   'text-red-600',     // Google Red
   'text-yellow-500',  // Google Yellow
+  'text-blue-600',    // Google Blue
   'text-green-600',   // Google Green
 ];
 

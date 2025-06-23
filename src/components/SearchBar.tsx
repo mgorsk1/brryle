@@ -24,7 +24,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({ onSearch, isLoading }) => 
           type="text"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
-          placeholder="Search Brryle or type URL"
+          placeholder="Search Brryle"
           className="flex-grow px-5 py-3 text-gray-700 bg-white rounded-l-full focus:outline-none text-base"
           disabled={isLoading}
           aria-label="Search query"
