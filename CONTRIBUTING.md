@@ -37,7 +37,17 @@ Implement your changes, ensuring they adhere to the existing code style and conv
 
 Before submitting a pull request, ensure your changes work as expected and do not introduce new issues. Run the existing tests (if any) and perform manual testing.
 
-### 6. Commit Your Changes
+### 6. Ensure Code Quality
+
+Before committing, run the quality checks to ensure your code adheres to the project's standards:
+
+```bash
+npm run quality
+```
+
+This command will run linting, formatting, and type checking.
+
+### 7. Commit Your Changes
 
 Commit your changes with a clear and concise commit message. Follow the Conventional Commits specification if possible (e.g., `feat: Add new search filter`, `fix: Resolve pagination bug`).
 

@@ -87,6 +87,7 @@ The `package.json` includes several useful scripts:
 -   `npm start`: Starts the Node.js backend server.
 -   `npm run dev`: Builds the frontend and then starts the backend server (useful for local development).
 -   `npm test`: Currently a placeholder.
+-   `npm run quality`: Runs linting, formatting, and type checking to ensure code quality.
 
 ## Configuration
 
