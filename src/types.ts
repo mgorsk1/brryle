@@ -1,4 +1,3 @@
-
 export interface SearchResultItemSource {
   title: string;
   description: string;
@@ -15,7 +14,7 @@ export interface SearchResultItem {
   url: string; // Top-level URL
   _source: SearchResultItemSource;
   // For convenience, derived from _source or directly from Gemini
-  categories: string[]; 
+  categories: string[];
   labels: string[];
 }
 

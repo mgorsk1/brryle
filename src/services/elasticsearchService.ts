@@ -1,4 +1,3 @@
-
 import { SearchResponse, SearchResultItem, SearchResultItemSource, HealthStatus } from '../types';
 import { PageSize, ESIndex, ESQueryTemplate } from '../constants';
 
@@ -10,26 +9,28 @@ export const getElasticsearchClusterHealth = async (): Promise<HealthStatus> => 
     const response = await fetch(`/api/_cluster/health`, {
       signal: controller.signal,
       headers: {
-        'Accept': 'application/json' // Usually not needed for ES GET requests but good practice
-      }
+        Accept: 'application/json', // Usually not needed for ES GET requests but good practice
+      },
     });
     clearTimeout(timeoutId);
 
     if (!response.ok) {
-      console.error(`[Brryle Search] Elasticsearch health check failed: ${response.status} ${response.statusText}`);
+      console.error(
+        `[Brryle Search] Elasticsearch health check failed: ${response.status} ${response.statusText}`,
+      );
       // Attempt to read error body if any (ES often returns JSON errors)
       try {
         const errorData = await response.json();
-        console.error("[Brryle Search] Elasticsearch error details:", errorData);
-      } catch (e) {
+        console.error('[Brryle Search] Elasticsearch error details:', errorData);
+      } catch (error) {
         // If error body is not JSON or unreadable
-        console.error("[Brryle Search] Could not parse Elasticsearch error response.");
+        console.error('[Brryle Search] Could not parse Elasticsearch error response.', error);
       }
       return HealthStatus.UNKNOWN; // Or UNKNOWN, depending on desired behavior for HTTP errors
     }
 
     const healthData = await response.json();
-    
+
     switch (healthData.status?.toLowerCase()) {
       case 'green':
         return HealthStatus.GREEN;
@@ -51,10 +52,9 @@ export const getElasticsearchClusterHealth = async (): Promise<HealthStatus> => 
   }
 };
 
-
 export const performSearch = async (
   query: string,
-  currentPage: number = 1
+  currentPage: number = 1,
 ): Promise<SearchResponse> => {
   // Simulating Elasticsearch pFrom and pSize
   const pFrom = (currentPage - 1) * PageSize; // Updated usage
@@ -72,7 +72,8 @@ export const performSearch = async (
       },
     };
 
-    const response = await fetch(`/api/${ESIndex}/_search/template`, { // Updated usage
+    const response = await fetch(`/api/${ESIndex}/_search/template`, {
+      // Updated usage
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -82,22 +83,29 @@ export const performSearch = async (
 
     if (!response.ok) {
       const errorData = await response.json();
-      console.error("Elasticsearch query failed:", errorData);
+      console.error('Elasticsearch query failed:', errorData);
       throw new Error(`Elasticsearch search failed: ${response.statusText}`);
     }
 
     const responseData = await response.json();
     const esHits = responseData.hits.hits;
-    const total = typeof responseData.hits.total === 'number' ? responseData.hits.total : responseData.hits.total?.value || 0;
+    const total =
+      typeof responseData.hits.total === 'number'
+        ? responseData.hits.total
+        : responseData.hits.total?.value || 0;
     const took = responseData.took;
 
     const hits: SearchResultItem[] = esHits.map((hit: any) => ({
       id: hit._id,
-      title: hit._source?.title || "Untitled Result",
-      description: hit._source?.description || "No description available.",
-      url: hit._source?.url || "#",
+      title: hit._source?.title || 'Untitled Result',
+      description: hit._source?.description || 'No description available.',
+      url: hit._source?.url || '#',
       _source: hit._source as SearchResultItemSource,
-      categories: hit._source?.category ? (hit._source?.subcategory ? [hit._source.category, hit._source.subcategory] : [hit._source.category]) : [],
+      categories: hit._source?.category
+        ? hit._source?.subcategory
+          ? [hit._source.category, hit._source.subcategory]
+          : [hit._source.category]
+        : [],
       labels: hit._source?.labelsSplit || [],
     }));
 
@@ -107,8 +115,13 @@ export const performSearch = async (
       took,
       groundingAttributions: undefined, // Not applicable for Elasticsearch
     };
-
   } catch (error) {
-    console.error("Elasticsearch query failed:", error);
+    console.error('Elasticsearch query failed:', error);
+    return {
+      hits: [],
+      total: -1,
+      took: -1,
+      groundingAttributions: undefined, // Not applicable for Elasticsearch
+    };
   }
 };

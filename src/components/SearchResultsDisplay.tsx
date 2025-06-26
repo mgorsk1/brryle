@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { SearchResponse } from '../types';
 import { ResultCard } from './ResultCard';
@@ -11,7 +10,12 @@ interface SearchResultsDisplayProps {
   onPageChange: (page: number) => void;
 }
 
-export const SearchResultsDisplay: React.FC<SearchResultsDisplayProps> = ({ results, currentPage, totalPages, onPageChange }) => {
+export const SearchResultsDisplay: React.FC<SearchResultsDisplayProps> = ({
+  results,
+  currentPage,
+  totalPages,
+  onPageChange,
+}) => {
   if (results.hits.length === 0) {
     return <p className="text-gray-600 text-center my-8">No results found for your query.</p>;
   }
@@ -28,23 +32,27 @@ export const SearchResultsDisplay: React.FC<SearchResultsDisplayProps> = ({ resu
             Information possibly grounded by Google Search:
           </h3>
           <ul className="list-disc list-inside space-y-1 pl-2">
-            {results.groundingAttributions.map((attribution, index) => (
-              attribution.web && (
-                <li key={index} className="text-xs">
-                  <a 
-                    href={attribution.web.uri} 
-                    target="_blank" 
-                    rel="noopener noreferrer" 
-                    className="text-blue-600 hover:underline hover:text-blue-800 transition-colors"
-                    title={attribution.web.uri}
-                  >
-                    {attribution.web.title || attribution.web.uri}
-                  </a>
-                </li>
-              )
-            ))}
+            {results.groundingAttributions.map(
+              (attribution, index) =>
+                attribution.web && (
+                  <li key={index} className="text-xs">
+                    <a
+                      href={attribution.web.uri}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-blue-600 hover:underline hover:text-blue-800 transition-colors"
+                      title={attribution.web.uri}
+                    >
+                      {attribution.web.title || attribution.web.uri}
+                    </a>
+                  </li>
+                ),
+            )}
           </ul>
-           <p className="text-xs text-yellow-700 mt-2">Note: Grounding suggests these sources may be relevant. Verify information independently.</p>
+          <p className="text-xs text-yellow-700 mt-2">
+            Note: Grounding suggests these sources may be relevant. Verify information
+            independently.
+          </p>
         </div>
       )}
 
@@ -55,11 +63,7 @@ export const SearchResultsDisplay: React.FC<SearchResultsDisplayProps> = ({ resu
       </div>
 
       {totalPages > 1 && (
-        <Pagination
-          currentPage={currentPage}
-          totalPages={totalPages}
-          onPageChange={onPageChange}
-        />
+        <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={onPageChange} />
       )}
     </div>
   );

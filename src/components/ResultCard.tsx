@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { SearchResultItem } from '../types';
 
@@ -10,7 +9,9 @@ const ExpandableText: React.FC<{ text: string; maxLength: number }> = ({ text, m
   const [isExpanded, setIsExpanded] = useState(false);
 
   if (!text || text.length <= maxLength) {
-    return <p className="text-sm text-gray-700 leading-relaxed">{text || 'No description available.'}</p>;
+    return (
+      <p className="text-sm text-gray-700 leading-relaxed">{text || 'No description available.'}</p>
+    );
   }
 
   return (
@@ -43,32 +44,37 @@ export const ResultCard: React.FC<ResultCardProps> = ({ document }) => {
             </a>
           </h2>
           {categoriesDisplay && (
-            <p className="text-xs text-gray-500 whitespace-nowrap mt-1 sm:mt-0 sm:ml-4">{categoriesDisplay}</p>
+            <p className="text-xs text-gray-500 whitespace-nowrap mt-1 sm:mt-0 sm:ml-4">
+              {categoriesDisplay}
+            </p>
           )}
         </div>
-        
+
         <p className="text-xs text-green-700 truncate mb-1">{url}</p>
-        
+
         <ExpandableText text={description || ''} maxLength={180} />
 
-        {(labelsSplit && labelsSplit.length > 0) || (url && url !== "#") ? (
+        {(labelsSplit && labelsSplit.length > 0) || (url && url !== '#') ? (
           <>
             <hr className="my-3 border-gray-200" />
             <div className="flex flex-col sm:flex-row justify-between items-center mt-2 gap-2">
               <div className="flex flex-wrap gap-2">
-                {labelsSplit && labelsSplit.map((label, index) => (
-                  label && label.length > 0 && (
-                    <span
-                      key={index}
-                      className="px-2.5 py-1 text-xs font-medium text-indigo-700 bg-indigo-100 rounded-full"
-                    >
-                      {label}
-                    </span>
-                  )
-                ))}
+                {labelsSplit &&
+                  labelsSplit.map(
+                    (label, index) =>
+                      label &&
+                      label.length > 0 && (
+                        <span
+                          key={index}
+                          className="px-2.5 py-1 text-xs font-medium text-indigo-700 bg-indigo-100 rounded-full"
+                        >
+                          {label}
+                        </span>
+                      ),
+                  )}
               </div>
-              {url && url !== "#" && (
-                 <a
+              {url && url !== '#' && (
+                <a
                   href={url}
                   target="_blank"
                   rel="noopener noreferrer"
