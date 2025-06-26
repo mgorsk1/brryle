@@ -124,8 +124,4 @@ task dummy-setup
 
 ## Contributing
 
-Please read `CONTRIBUTING.md` (if it exists) for details on our code of conduct, and the process for submitting pull requests to us.
-
-## License
-
-This project is licensed under the ISC License - see the `LICENSE` file for details.
+Please read `CONTRIBUTING.md` for details on code of conduct, and the process for submitting pull requests.
