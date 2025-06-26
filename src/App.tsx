@@ -44,7 +44,7 @@ const App: React.FC = () => {
       window.scrollTo(0, 0); // Scroll to top on page change
     }
   };
-  
+
   const totalPages = searchResults ? Math.ceil(searchResults.total / PageSize) : 0; // Updated usage
 
   return (
@@ -53,13 +53,13 @@ const App: React.FC = () => {
       <div className="container mx-auto px-4 py-8 flex-grow max-w-4xl">
         <Header />
         <SearchBar onSearch={(query) => handleSearch(query, 1)} isLoading={isLoading} />
-        
+
         {isLoading && <LoadingSpinner />}
         {error && <ErrorMessage message={error} />}
-        
+
         {searchResults && !isLoading && !error && (
-          <SearchResultsDisplay 
-            results={searchResults} 
+          <SearchResultsDisplay
+            results={searchResults}
             currentPage={currentPage}
             totalPages={totalPages}
             onPageChange={handlePageChange}
