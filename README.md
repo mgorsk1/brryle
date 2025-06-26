@@ -89,6 +89,32 @@ The `package.json` includes several useful scripts:
 -   `npm test`: Currently a placeholder.
 -   `npm run quality`: Runs linting, formatting, and type checking to ensure code quality.
 
+## Managing Elasticsearch Sample Data
+
+This project uses `Taskfile.yml` to manage Elasticsearch sample data, including loading dummy data, setting up aliases, and registering query templates. You'll need `task` (Taskfile) installed to use these commands.
+
+### Prerequisites
+
+-   [Task](https://taskfile.dev/#/installation) (Taskfile)
+
+### Available Tasks
+
+Ensure your Elasticsearch instance is running (e.g., via `docker-compose up elastic`) before running these tasks.
+
+-   `task remove-index`: Removes the `news-dummy` Elasticsearch index.
+-   `task load-data`: Loads dummy data from `./resources/elasticsearch/dummy-data.json` into the `news-dummy` index.
+-   `task register-alias`: Registers an index alias for `news-dummy`.
+-   `task register-query-template`: Registers a query template named `brryle`.
+-   `task dummy-setup`: Runs all the above tasks in sequence to set up the dummy data and configurations from scratch. This is useful for a fresh start.
+
+### Example Usage
+
+To set up the dummy data for the first time or reset it:
+
+```bash
+task dummy-setup
+```
+
 ## Configuration
 
 -   **`docker compose.yml`**:
