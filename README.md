@@ -6,7 +6,7 @@ This project is a web application that provides search functionality, powered by
 
 - `src/`: Contains the React frontend application.
 - `server.cjs`: The Node.js backend server.
-- `docker-compose.yml`: Defines the multi-container Docker environment, including Elasticsearch, Kibana, and the Brryle application.
+- `docker compose.yml`: Defines the multi-container Docker environment, including Elasticsearch, Kibana, and the Brryle application.
 - `Dockerfile`: Used to build the Docker image for the Brryle application.
 - `package.json`: Manages frontend and backend dependencies and scripts.
 
@@ -14,7 +14,7 @@ This project is a web application that provides search functionality, powered by
 
 - **Search Functionality**: Leverages Elasticsearch for efficient and powerful search capabilities.
 - **React Frontend**: A dynamic and responsive user interface built with React.
-- **Node.js Backend**: Serves the frontend and handles API requests, likely proxying to Elasticsearch.
+- **Node.js Backend**: Serves the frontend and handles API requests, proxying them to Elasticsearch.
 - **Dockerized Environment**: Easy setup and deployment using Docker Compose.
 - **Kibana Integration**: Includes Kibana for visualizing and managing Elasticsearch data.
 
@@ -34,13 +34,13 @@ The easiest way to get the entire application stack running is by using Docker C
 
 1.  **Clone the repository**:
     ```bash
-    git clone <repository_url>
+    git clone https://github.com/mgorsk1/brryle
     cd brryle
     ```
 2.  **Build and run the Docker containers**:
-    This command will build the `brryle` application image, and then start all services defined in `docker-compose.yml` (Elasticsearch, Kibana, and Brryle).
+    This command will build the `brryle` application image, and then start all services defined in `docker compose.yml` (Elasticsearch, Kibana, and Brryle).
     ```bash
-    docker-compose up --build
+    docker compose up -d --build
     ```
     This might take some time on the first run as it downloads Docker images and builds the application.
 
@@ -51,9 +51,9 @@ The easiest way to get the entire application stack running is by using Docker C
     -   Elasticsearch will be available at `http://localhost:9200`.
 
 4.  **Stop the services**:
-    To stop the running Docker containers, press `Ctrl+C` in the terminal where `docker-compose up` is running. To stop and remove the containers, networks, and volumes (for a clean slate), use:
+    To stop the running Docker containers, press `Ctrl+C` in the terminal where `docker compose up` is running. To stop and remove the containers, networks, and volumes (for a clean slate), use:
     ```bash
-    docker-compose down -v
+    docker compose down -v
     ```
 
 ### Local Development (without Docker Compose for the application)
@@ -62,7 +62,7 @@ If you want to develop the frontend and backend locally without Docker Compose f
 
 1.  **Start Elasticsearch and Kibana with Docker Compose**:
     ```bash
-    docker-compose up elastic kibana
+    docker compose up elastic kibana
     ```
     This will only bring up the Elasticsearch and Kibana services.
 
@@ -90,10 +90,10 @@ The `package.json` includes several useful scripts:
 
 ## Configuration
 
--   **`docker-compose.yml`**:
+-   **`docker compose.yml`**:
     -   `PAGE_SIZE`: Configures the number of search results per page for the `brryle` service.
     -   `BACKEND_URL`: Specifies the Elasticsearch URL for the `brryle` service.
--   **Elasticsearch**: Configured within `docker-compose.yml` for development purposes (e.g., `xpack.security.enabled=false`).
+-   **Elasticsearch**: Configured within `docker compose.yml` for development purposes (e.g., `xpack.security.enabled=false`).
 
 ## Contributing
 
